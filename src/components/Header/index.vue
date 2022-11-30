@@ -37,8 +37,9 @@
             type="text"
             id="autocomplete"
             class="input-error input-xxlarge"
+            v-model="keyWord"
           />
-          <button class="sui-btn btn-xlarge btn-danger" type="button" @click="goSearch">
+          <button class="sui-btn btn-xlarge btn-danger" type="button" @click="goSearch(keyWord)">
             搜索
           </button>
         </form>
@@ -50,11 +51,23 @@
 <script>
 export default {
   name: "",
+  data() {
+    return {
+      keyWord:''
+    }
+  },
   methods:{
     //搜索按钮的回调函数
-    goSearch(){
+    goSearch(keyWord){
       //路由跳转【编程式导航】
-      this.$router.push("/search");
+      /* this.$router.push("/search"); */
+     /*  this.$router.push({name:"search",params:{keyWord:this.keyWord}}) */
+      this.$router.push({
+        name: "search",
+        params: {
+          keyWord: keyWord,
+        },
+      });
     }
   },
 };

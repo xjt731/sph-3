@@ -1,12 +1,13 @@
 <template>
   <div>
-       搜索
+       <h1>params的参数:{{$route.params.keyWord}}----------{{$route.params.keyWord}}</h1>
   </div>
 </template>
 
 <script>
 export default {
   name: '',
+  props:['keyWord']
 }
 </script>
 
