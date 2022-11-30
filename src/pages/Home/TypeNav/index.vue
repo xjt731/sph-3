@@ -1694,6 +1694,9 @@
 <script>
 export default {
   name: "",
+  created(){
+    this.$store.dispatch('getCategory')
+  }
 };
 </script>
 
