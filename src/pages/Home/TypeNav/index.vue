@@ -1,31 +1,37 @@
 <template>
   <div class="type-nav">
     <div class="container">
-     <div  @mouseleave="currentIndex=-1">
-      <h2 class="all">全部商品分类</h2>
-      <div class="sort">
-        <div class="all-sort-list2">
-          <div class="item" v-for="(c1,index) in categoryList" :key="c1.categoryId" @mouseenter="changeIndex(index)">
-            <h3 :class="{show:currentIndex===index}">
-              <a href="">{{c1.categoryName}}-{{index}}</a>
-            </h3>
-            <div class="item-list clearfix">
-              <div class="subitem" v-for="(c2,index) in c1.categoryChild" :key="c2.categoryId">
-                <dl class="fore">
-                  <dt>
-                    <a href="">{{c2.categoryName}}</a>
-                  </dt>
-                  <dd>
-                    <em v-for="(c3,index) in c2.categoryChild" :key="c3.categoryId">
-                      <a href="">{{c3.categoryName}}</a>
-                    </em>
-                  </dd>
-                </dl>
+      <div @mouseleave="currentIndex=-1">
+        <h2 class="all">全部商品分类</h2>
+        <div class="sort">
+          <div class="all-sort-list2">
+            <div
+              class="item"
+              v-for="(c1,index) in categoryList"
+              :key="c1.categoryId"
+              @mouseenter="changeIndex(index)"
+            >
+              <!-- 鼠标移上谁，谁才有动态类名show -->
+              <h3 :class="{show:currentIndex===index}">
+                <a href>{{c1.categoryName}}-{{index}}</a>
+              </h3>
+              <div class="item-list clearfix">
+                <div class="subitem" v-for="(c2,index) in c1.categoryChild" :key="c2.categoryId">
+                  <dl class="fore">
+                    <dt>
+                      <a href>{{c2.categoryName}}</a>
+                    </dt>
+                    <dd>
+                      <em v-for="(c3,index) in c2.categoryChild" :key="c3.categoryId">
+                        <a href>{{c3.categoryName}}</a>
+                      </em>
+                    </dd>
+                  </dl>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
       </div>
       <nav class="nav">
         <a href="###">服装城</a>
@@ -37,37 +43,37 @@
         <a href="###">有趣</a>
         <a href="###">秒杀</a>
       </nav>
-   
     </div>
   </div>
 </template>
 
 <script>
-import {mapState} from 'vuex'
+//按需引入：只是把需要的功能引入进来
+import throttle from "lodash/throttle";
+import { mapState } from "vuex";
 export default {
   name: "",
   data() {
     return {
       //索引值的存储
-     currentIndex:-1
-    }
+      currentIndex: -1
+    };
   },
-  created(){
-    this.$store.dispatch('getCategory')
+  created() {
+    this.$store.dispatch("getCategory");
   },
-  computed:{
+  computed: {
     ...mapState({
-      categoryList:state=>state.home.categoryList
+      categoryList: state => state.home.categoryList
     })
   },
-  methods:{
-    //h3的鼠标移入事件
-    changeIndex(index){
-      //修改索引值
+  methods: {
+    //h3的鼠标移入事件:用户行为如果过快，会出现浏览器反应不过来的现象----【用户行为太快】
+    //回调函数里面业务代码很多，卡顿、业务没有完整完成。
+    //节流功能
+    changeIndex: throttle(function(index) {
       this.currentIndex = index;
-      
-      
-    }
+    }, 20)
   }
 };
 </script>
@@ -127,8 +133,15 @@ export default {
               color: #333;
             }
             //对应 <h3 :class="{show:currentIndex===index}">
-            &.show{
-              background:linear-gradient(to right,pink,yellow,cyan,blue,red)
+            &.show {
+              background: linear-gradient(
+                to right,
+                pink,
+                yellow,
+                cyan,
+                blue,
+                red
+              );
             }
           }
 
