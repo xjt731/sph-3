@@ -68,6 +68,9 @@ export default {
     })
   },
   methods: {
+    //原本：changeIndex(index){	
+    //        this.currentIndex = index;
+ 		//     }
     //h3的鼠标移入事件:用户行为如果过快，会出现浏览器反应不过来的现象----【用户行为太快】
     //回调函数里面业务代码很多，卡顿、业务没有完整完成。
     //节流功能
