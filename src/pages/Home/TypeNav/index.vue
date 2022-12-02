@@ -13,39 +13,33 @@
               @mouseenter="changeIndex(index)"
             >
               <h3 :class="{ show: currentIndex === index }">
+                <!-- 自定义属性 -->
                 <a
                   :data-categoryName="c1.categoryName"
                   :data-category1Id="c1.categoryId"
-                  >{{ c1.categoryName }}</a
-                >
+                >{{ c1.categoryName }}</a>
               </h3>
+              <!-- 自定义样式 -->
               <div
                 class="item-list clearfix"
                 :style="{ display: currentIndex === index ? 'block' : 'none' }"
               >
-                <div
-                  class="subitem"
-                  v-for="(c2, index) in c1.categoryChild"
-                  :key="c2.categoryId"
-                >
+                <div class="subitem" v-for="(c2, index) in c1.categoryChild" :key="c2.categoryId">
                   <dl class="fore">
                     <dt>
+                      <!-- 自定义属性 -->
                       <a
                         :data-categoryName="c2.categoryName"
                         :data-category2Id="c2.categoryId"
-                        >{{ c2.categoryName }}</a
-                      >
+                      >{{ c2.categoryName }}</a>
                     </dt>
                     <dd>
-                      <em
-                        v-for="(c3, index) in c2.categoryChild"
-                        :key="c3.categoryId"
-                      >
+                      <em v-for="(c3, index) in c2.categoryChild" :key="c3.categoryId">
+                        <!-- 自定义属性 -->
                         <a
                           :data-categoryName="c3.categoryName"
                           :data-category3Id="c3.categoryId"
-                          >{{ c3.categoryName }}</a
-                        >
+                        >{{ c3.categoryName }}</a>
                       </em>
                     </dd>
                   </dl>
@@ -90,15 +84,50 @@ export default {
     })
   },
   methods: {
-    //原本：changeIndex(index){	
+    //原本：changeIndex(index){
     //        this.currentIndex = index;
- 		//     }
+    //     }
     //h3的鼠标移入事件:用户行为如果过快，会出现浏览器反应不过来的现象----【用户行为太快】
     //回调函数里面业务代码很多，卡顿、业务没有完整完成。
     //节流功能
     changeIndex: throttle(function(index) {
       this.currentIndex = index;
-    }, 20)
+    }, 20),
+    goSearch(event) {
+      //点击a标签进行路由跳转：父节点代理的子节点的类型很多 div h3 dd dt em a
+      //通过event可以获取到当前触发事件的节点
+      let nodeElement = event.target;
+      console.log(nodeElement);
+      //给a标签添加自定义属性data-categoryName，保证这个节点带data-categoryName，一定是a标签
+      //可以通过节点的dataset属性获取相应节点的自定义属性，返回的是一个对象KV【自定义属性相关的】
+      //如果带有categoryname字段的一定是a标签
+      let {
+        categoryname,
+        category1id,
+        category2id,
+        category3id
+      } = nodeElement.dataset;
+
+      if (categoryname) {
+        //准备路由跳转的参数
+        let location = { name: "search" };
+        //第一级分类的a标签
+        let query = { k: "", y: categoryname };
+        if (category1id) {
+          query = { k: category1id, y: categoryname };
+        } else if (category2id) {
+          //第二级分类标签
+
+          query = { k: category2id, y: categoryname };
+        } else {
+          //第三级分类标签
+
+          query = { k: category3id, y: categoryname };
+        }
+        location.query = query;
+        this.$router.push(location);
+      }
+    }
   }
 };
 </script>
