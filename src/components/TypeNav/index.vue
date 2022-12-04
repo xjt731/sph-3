@@ -73,13 +73,15 @@ export default {
     return {
       //索引值的存储
       currentIndex: -1,
+      //控制三级联动的显示与隐藏的
       show:true
 
     };
   },
-  created() {
+  //删除created，TypeNav转到App.vue只发送一次请求
+  /* created() {
     this.$store.dispatch("getCategory");
-  },
+  }, */
   computed: {
     ...mapState({
       categoryList: state => state.home.categoryList
@@ -130,17 +132,21 @@ export default {
         this.$router.push(location);
       }
     },
+    //修改show的属性的方法（鼠标进入）
+ 	
     changeShow(){
       if(this.$route.path!="/home"){
         this.show = true
       }
     },
+    //修改show的属性的方法（鼠标离开）
     leaveShow(){
       if(this.$route.path!="/home"){
         this.show = false
       }
     },
   },
+  //进入非home界面是隐藏三级联动
   mounted() {
       if(this.$route.path!="/home"){
         this.show = false
