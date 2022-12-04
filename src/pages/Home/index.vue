@@ -13,7 +13,7 @@
 
 <script>
 
-import TypeNav from "./TypeNav";
+
 import ListContainer from "./ListContainer";
 import Brand from "./Brand";
 import Floor from "./Floor";
@@ -24,7 +24,7 @@ import Recommend from "./Recommend";
 export default {
   name: "",
   components: {
-    TypeNav,
+    
     ListContainer,
     Brand,
     Floor,

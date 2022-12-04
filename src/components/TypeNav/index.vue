@@ -1,9 +1,9 @@
 <template>
   <div class="type-nav">
     <div class="container">
-      <div @mouseleave="currentIndex = -1">
-        <h2 class="all">全部商品分类</h2>
-        <div class="sort">
+      <div @mouseleave="leaveShow">
+        <h2 class="all" @mouseenter="changeShow">全部商品分类</h2>
+        <div class="sort" v-show="show">
           <!-- 事件的委派更加合理一些 -->
           <div class="all-sort-list2" @click="goSearch">
             <div
@@ -68,11 +68,13 @@
 import throttle from "lodash/throttle";
 import { mapState } from "vuex";
 export default {
-  name: "",
+  name: "TypeNav",
   data() {
     return {
       //索引值的存储
-      currentIndex: -1
+      currentIndex: -1,
+      show:true
+
     };
   },
   created() {
@@ -127,8 +129,23 @@ export default {
         location.query = query;
         this.$router.push(location);
       }
-    }
-  }
+    },
+    changeShow(){
+      if(this.$route.path!="/home"){
+        this.show = true
+      }
+    },
+    leaveShow(){
+      if(this.$route.path!="/home"){
+        this.show = false
+      }
+    },
+  },
+  mounted() {
+      if(this.$route.path!="/home"){
+        this.show = false
+      }
+    },
 };
 </script>
 
