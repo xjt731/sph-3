@@ -93,6 +93,9 @@
 <script>
 export default {
   name: "",
+  mounted() {
+    this.$store.dispatch('getBannerList')
+  },
 };
 </script>
 
