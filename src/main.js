@@ -8,9 +8,8 @@ Vue.component(TypeNav.name,TypeNav)
 //引入相关的mock数据的文件【需要代码执行一次】
 //获取mock数据
 import '@/mock/mockServe'
-import {reqGetBannerList} from '@/api';
-let result = reqGetBannerList()
-console.log(result);
+//引入swiper需要的样式
+import 'swiper/css/swiper.css'
 
 
 

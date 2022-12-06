@@ -3,10 +3,10 @@
     <div class="sortList clearfix">
       <div class="center">
         <!--banner轮播-->
-        <div class="swiper-container" id="mySwiper">
+        <div class="swiper-container" ref="mySwiper">
           <div class="swiper-wrapper">
-            <div class="swiper-slide">
-              <img src="./images/banner1.jpg" />
+            <div class="swiper-slide" v-for="(item,index) in bannerList" :key=item.id>
+              <img :src="item.imgUrl" />
             </div>
           </div>
           <!-- 如果需要分页器 -->
@@ -25,11 +25,21 @@
           </h4>
           <div class="clearix"></div>
           <ul class="news-list unstyled">
-            <li><span class="bold">[特惠]</span>备战开学季 全民半价购数码</li>
-            <li><span class="bold">[公告]</span>备战开学季 全民半价购数码</li>
-            <li><span class="bold">[特惠]</span>备战开学季 全民半价购数码</li>
-            <li><span class="bold">[公告]</span>备战开学季 全民半价购数码</li>
-            <li><span class="bold">[特惠]</span>备战开学季 全民半价购数码</li>
+            <li>
+              <span class="bold">[特惠]</span>备战开学季 全民半价购数码
+            </li>
+            <li>
+              <span class="bold">[公告]</span>备战开学季 全民半价购数码
+            </li>
+            <li>
+              <span class="bold">[特惠]</span>备战开学季 全民半价购数码
+            </li>
+            <li>
+              <span class="bold">[公告]</span>备战开学季 全民半价购数码
+            </li>
+            <li>
+              <span class="bold">[特惠]</span>备战开学季 全民半价购数码
+            </li>
           </ul>
         </div>
         <ul class="lifeservices">
@@ -91,11 +101,40 @@
 </template>
 
 <script>
+import Swiper from "swiper";
+import { mapState } from "vuex";
 export default {
   name: "",
   mounted() {
-    this.$store.dispatch('getBannerList')
+    this.$store.dispatch("getBannerList"),
+      setTimeout(() => {
+        var mySwiper = new Swiper(this.$refs.mySwiper, {
+          //direction: "vertical", // 垂直切换选项
+          loop: true, // 循环模式选项
+
+          // 如果需要分页器
+          pagination: {
+            el: ".swiper-pagination"
+          },
+
+          // 如果需要前进后退按钮
+          navigation: {
+            nextEl: ".swiper-button-next",
+            prevEl: ".swiper-button-prev"
+          },
+
+          // 如果需要滚动条
+          scrollbar: {
+            el: ".swiper-scrollbar"
+          }
+        });
+      }, 2000);
   },
+  computed: {
+    ...mapState({
+      bannerList: state => state.home.bannerList
+    })
+  }
 };
 </script>
 
