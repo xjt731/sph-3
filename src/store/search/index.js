@@ -23,7 +23,14 @@ const actions = {
    
 };
 //getters：计算属性
-const getters = {};
+const getters = {
+    //搜索模块【商品展示的数据】
+     //state：它是当前小仓库（search）的state数据，没有home仓库中的state
+     //只是当前仓库的state
+     goodsList(state){
+        return state.searchList.goodsList
+     }
+};
 
 export default {
     state,

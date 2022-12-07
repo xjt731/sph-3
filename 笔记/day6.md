@@ -10,7 +10,25 @@
 向服务器发请求，需要把这些参数携带给服务器，服务器就会返回相应的用户的搜索的数据，search就可以进行展示。
 
 1.1:开发的三级联动业务，当你点击a标签的时候，会进行路由的跳转，将产品的名字与id传递给search模块----（query）
+if(this.$route.params){
+           //query参数
+           location.query = query;
+           //params
+           location.params=this.$route.params
+           //如有有params参数也需要携带给search模块
+           this.$router.push(location)
+}
 1.2:点击搜索按钮的时候，用户输入进来的关键字，点击按钮的时候会通过params参数传递给search模块-----（params）
+ if (this.$route.query) {
+         //本身点击搜索按钮，当年只是携带params，如果路径当中存在query参数，是需要把query参数页携带给search
+         let location = { name: "search", params: { keyword: keyWord } };
+         location.query = this.$route.query;
+         this.$router.push(location);
+} else {
+         let location = { name: "search", params: { keyword: keyWord } };
+         this.$router.push(location);
+}
+
 1.3路由跳转（home->search）,两个地方，三级联动（typeNav）、Header组件（搜索按钮）
 
 
@@ -44,9 +62,9 @@
 
 注意：搜索的接口，需要传递参数，至少是一个空对象（KV没有，但是至少给服务器一个对象）
 
-
-
-
+getSearchList(){
+  this.$store.dispatch('getSearchList',{})
+}
 
 
 
