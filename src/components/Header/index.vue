@@ -29,19 +29,12 @@
       <h1 class="logoArea">
         <!-- <router-link class="logo" title="尚品汇" to="/home">
           <img src="./images/logo.png" alt="" />
-        </router-link> -->
+        </router-link>-->
       </h1>
       <div class="searchArea">
         <form action="###" class="searchForm">
-          <input
-            type="text"
-            id="autocomplete"
-            class="input-error input-xxlarge"
-            v-model="keyWord"
-          />
-          <button class="sui-btn btn-xlarge btn-danger" type="button" @click="goSearch(keyWord)">
-            搜索
-          </button>
+          <input type="text" id="autocomplete" class="input-error input-xxlarge" v-model="keyWord" />
+          <button class="sui-btn btn-xlarge btn-danger" type="button" @click="goSearch(keyWord)">搜索</button>
         </form>
       </div>
     </div>
@@ -53,23 +46,44 @@ export default {
   name: "",
   data() {
     return {
-      keyWord:''
-    }
+      keyWord: ""
+    };
   },
-  methods:{
+  methods: {
     //搜索按钮的回调函数
-    goSearch(keyWord){
+    goSearch(keyWord) {
       //路由跳转【编程式导航】
       /* this.$router.push("/search"); */
-     /*  this.$router.push({name:"search",params:{keyWord:this.keyWord}}) */
-      this.$router.push({
+      /*  this.$router.push({name:"search",params:{keyWord:this.keyWord}}) */
+      /* this.$router.push({
         name: "search",
         params: {
-          keyWord: keyWord,
-        },
-      });
+          keyword: keyWord
+        }
+      }); */
+      /* if (this.$route.query) {
+        //本身点击搜索按钮，当年只是携带params，如果路径当中存在query参数，是需要把query参数页携带给search
+        let location = {
+          name: "search",
+          params: { keyword: keyWord  }
+        };
+        location.query = this.$route.query;
+        console.log(location);
+        
+        this.$router.push(location);
+        console.log(222);
+      } */
+      if (this.$route.query) {
+        //本身点击搜索按钮，当年只是携带params，如果路径当中存在query参数，是需要把query参数页携带给search
+        let location = { name: "search", params: { keyword: keyWord } };
+        location.query = this.$route.query;
+        this.$router.push(location);
+      } else {
+        let location = { name: "search", params: { keyword: keyWord } };
+        this.$router.push(location);
+      }
     }
-  },
+  }
 };
 </script>
 

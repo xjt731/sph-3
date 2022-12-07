@@ -74,8 +74,7 @@ export default {
       //索引值的存储
       currentIndex: -1,
       //控制三级联动的显示与隐藏的
-      show:true
-
+      show: true
     };
   },
   //删除created，TypeNav转到App.vue只发送一次请求
@@ -128,30 +127,50 @@ export default {
 
           query = { k: category3id, y: categoryname };
         }
-        location.query = query;
-        this.$router.push(location);
+        /* location.query = query;
+        this.$router.push(location); */
+        //路由跳转之前：看一下有没有params参数，如果有params参数需要携带给search
+        /* if (this.$route.params) {
+          //query参数
+          location.query = query;
+          //params
+          location.params = this.$route.params;
+          //如有有params参数也需要携带给search模块
+          this.$router.push(location);
+          console.log(333);
+          console.log(location);
+          
+        } */
+        if(this.$route.params){
+          //query参数
+          location.query = query;
+          //params
+          location.params=this.$route.params
+          //如有有params参数也需要携带给search模块
+          this.$router.push(location)
+        }
       }
     },
     //修改show的属性的方法（鼠标进入）
- 	
-    changeShow(){
-      if(this.$route.path!="/home"){
-        this.show = true
+
+    changeShow() {
+      if (this.$route.path != "/home") {
+        this.show = true;
       }
     },
     //修改show的属性的方法（鼠标离开）
-    leaveShow(){
-      if(this.$route.path!="/home"){
-        this.show = false
+    leaveShow() {
+      if (this.$route.path != "/home") {
+        this.show = false;
       }
-    },
+    }
   },
   //进入非home界面是隐藏三级联动
   mounted() {
-      if(this.$route.path!="/home"){
-        this.show = false
-      }
-    },
+    if (this.$route.path != "/home") {
+      this.show = false;
+    }
+  }
 };
 </script>
 
