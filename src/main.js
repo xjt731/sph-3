@@ -10,8 +10,8 @@ Vue.component(TypeNav.name,TypeNav)
 import '@/mock/mockServe'
 //引入swiper需要的样式
 import 'swiper/css/swiper.css'
-/* import {reqGetFloorList} from '@/api/index'
-let result = reqGetFloorList()
+/* import {reqSearchList} from '@/api/index'
+let result = reqSearchList()
 console.log(result); */
 
 
