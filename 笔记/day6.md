@@ -5,7 +5,7 @@
 
 
 
-1)合并参数*****
+(1)合并参数*****
 为什么需要合并参数（query|params）:因为这些参数，对于search是有用的，因为search通过这些参数
 向服务器发请求，需要把这些参数携带给服务器，服务器就会返回相应的用户的搜索的数据，search就可以进行展示。
 
@@ -37,7 +37,7 @@ if(this.$route.params){
 
 
 
-2)完成search静态组件
+(2)完成search静态组件
 项目节点:学习的并不是基础的语法，'套路'
 再次提醒：组件通信很重要-----【七种组件通信：务必要会】
 接下来开发search搜索模块：注意在老师给你们的文件夹中有search静态组件，复制过来即可。
@@ -66,6 +66,66 @@ getSearchList(){
   this.$store.dispatch('getSearchList',{})
 }
 
+(3)获取search模块数据 
+(4)展示商品列表数据
+
+(5)根据用户的搜索条件展示不同的数据。
+
+根据前台传递参数决定的 根据不同条件，展示不同的数据。----->取决于后台返回的数据
+
+1:发请求，获取搜索模块的数据
+2:根据用户搜索的条件携带参数给服务器，展示用户搜索的内容
+
+//监听路由的变化
+   watch: {
+     //组件实例身上是有$route这个属性的【包含：路由信息】
+     //只要路由发生变化，立即在向服务器发请求
+     $route() {
+       //清除上一次发请求的id
+       this.searchParams.category1Id = undefined;
+       this.searchParams.category2Id = undefined;
+       this.searchParams.category3Id = undefined;
+       //先收集最新的搜索条件（再次整理参数），在想服务器发请求
+       Object.assign(this.searchParams, this.$route.query, this.$route.params);
+       //再次发请求
+       this.getSearchList();
+     }
+   }
+
+开发遇见问题:用户条件可以发生多次变化，但是咱们的请求，只是会发一次【mounted中书写的】
+
+请求的性能优化: 发一个请求，需要向服务器携带参数：带100个参数 带1参数 【消耗宽带】 对于给服务器携带的参数：如果数值为undefind，向服务器发请求的时候，参数步携带给服务器的
+
+(6)面包屑的业务完成 
+1.注册自定义事件
+beforeCreate() {
+    //配置全局事件总线
+    Vue.prototype.$bus = this;
+},
+
+mounted() {
+    //监听自定义事件
+    this.$bus.$on("changeKeyword", () => {
+      //关键字置空
+      this.keyword = "";
+    });
+}
+
+2.触发自定义方法
+<!-- 用户搜索关键字的按钮 -->
+ 	          <li class="with-x" v-show="searchParams.keyword">{{searchParams.keyword}}<i @click="clearKeyword">×</i></li>
+
+    clearKeyword() {
+      //清除关键字的数据
+      this.searchParams.keyword = "";
+      //路由跳转自己跳自己
+      if (this.$route.query) {
+        this.$router.push({ name: "search", query: this.$route.query });
+      }
+      //通知兄弟组件，把关键字清除----全局事件总线$bus
+      //通知
+      this.$bus.$emit("changeKeyword");
+    }
 
 
 

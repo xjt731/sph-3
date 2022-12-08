@@ -83,6 +83,13 @@ export default {
         this.$router.push(location);
       }
     }
+  },
+  mounted() {
+    //监听自定义事件
+    this.$bus.$on("changeKeyword", () => {
+      //关键字置空
+      this.keyword = "";
+    });
   }
 };
 </script>
