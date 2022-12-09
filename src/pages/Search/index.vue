@@ -14,7 +14,7 @@
           <ul class="fl sui-tag">
             <!-- 面包屑可能有也可能没有 -->
             <!-- 产品名字的按钮 -->
-            <li class="with-x" v-show="searchParams.categoryName">
+            <li class="with-x" v-if="searchParams.categoryName">
               {{searchParams.categoryName}}
               <i @click="clearName">×</i>
             </li>
@@ -161,11 +161,12 @@ export default {
   //生命周期函数
   beforeMount() {
     //在发请求之前，把携带给服务器参数整理好，携带服务器
-    this.searchParams.category1Id = this.$route.query.category1Id;
-    this.searchParams.category2Id = this.$route.query.category2Id;
-    this.searchParams.category3Id = this.$route.query.category3Id;
-    this.searchParams.categoryName = this.$route.query.categoryName;
+    this.searchParams.category1Id = this.$route.query.k1;
+    this.searchParams.category2Id = this.$route.query.k2;
+    this.searchParams.category3Id = this.$route.query.k3;
+    this.searchParams.categoryName = this.$route.query.y;
     this.searchParams.keyword = this.$route.params.keyword;
+    //Object.assign(this.searchParams, this.$route.query, this.$route.params);
     /* console.log(this.searchParams); */
   },
   //组件挂载完毕发起一次请求
@@ -178,6 +179,8 @@ export default {
       //目前而言：组件通知服务器发请求，获取数据，携带一个空对象
       //当然将来这个空对象进行替换，替换我响应数据（收集用户选择调价带给服务器）
       //第二个参数：作为getSearchList这个action的第二个形参
+      console.log(this.searchParams);
+
       this.$store.dispatch("getSearchList", this.searchParams);
     },
     //清除产品的名字
@@ -190,6 +193,7 @@ export default {
       if (this.$route.params) {
         this.$router.push({ name: "search", params: this.$route.params });
       }
+      this.getSearchList();
     },
     //清除关键字
     clearKeyword() {
@@ -199,9 +203,12 @@ export default {
       if (this.$route.query) {
         this.$router.push({ name: "search", query: this.$route.query });
       }
-      //通知兄弟组件，把关键字清除----全局事件总线$bus
+      //通知组件，把关键字清除----全局事件总线$bus
       //通知
       this.$bus.$emit("changeKeyword");
+
+      //
+      this.getSearchList();
     }
   },
   computed: {
@@ -212,14 +219,19 @@ export default {
     //组件实例身上是有$route这个属性的【包含：路由信息】
     //只要路由发生变化，立即在向服务器发请求
     $route() {
+      this.searchParams.category1Id = this.$route.query.k1;
+      this.searchParams.category2Id = this.$route.query.k2;
+      this.searchParams.category3Id = this.$route.query.k3;
+      this.searchParams.categoryName = this.$route.query.y;
+      this.searchParams.keyword = this.$route.params.keyword;
+      //先收集最新的搜索条件（再次整理参数），在想服务器发请求
+      //Object.assign(this.searchParams, this.$route.query, this.$route.params);
+      //再次发请求
+      this.getSearchList();
       //清除上一次发请求的id
       this.searchParams.category1Id = undefined;
       this.searchParams.category2Id = undefined;
       this.searchParams.category3Id = undefined;
-      //先收集最新的搜索条件（再次整理参数），在想服务器发请求
-      Object.assign(this.searchParams, this.$route.query, this.$route.params);
-      //再次发请求
-      this.getSearchList();
     }
   }
 };

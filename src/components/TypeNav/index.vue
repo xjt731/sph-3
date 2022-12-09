@@ -115,17 +115,18 @@ export default {
         //准备路由跳转的参数
         let location = { name: "search" };
         //第一级分类的a标签
-        let query = { k: "", y: categoryname };
+        let query = { y: categoryname };
         if (category1id) {
-          query = { k: category1id, y: categoryname };
+          /* query = { k: category1id, y: categoryname }; */
+          query.k1= category1id
         } else if (category2id) {
           //第二级分类标签
-
-          query = { k: category2id, y: categoryname };
+          query.k2= category2id
+          /* query = { k: category2id, y: categoryname }; */
         } else {
           //第三级分类标签
-
-          query = { k: category3id, y: categoryname };
+          query.k3= category3id
+          /* query = { k: category3id, y: categoryname }; */
         }
         /* location.query = query;
         this.$router.push(location); */
