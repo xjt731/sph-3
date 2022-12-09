@@ -26,7 +26,7 @@
           </ul>
         </div>
         <!--selector:属于search组件的一个子组件-->
-        <SearchSelector />
+        <SearchSelector @getTradeMarkInfo='getTradeMarkInfo'/>
 
         <!--details-->
         <div class="details clearfix">
@@ -179,7 +179,7 @@ export default {
       //目前而言：组件通知服务器发请求，获取数据，携带一个空对象
       //当然将来这个空对象进行替换，替换我响应数据（收集用户选择调价带给服务器）
       //第二个参数：作为getSearchList这个action的第二个形参
-      console.log(this.searchParams);
+      //console.log(this.searchParams);
 
       this.$store.dispatch("getSearchList", this.searchParams);
     },
@@ -209,7 +209,15 @@ export default {
 
       //
       this.getSearchList();
+    },
+    getTradeMarkInfo(trademark){
+      let data = `${trademark.tmId}:${trademark.tmName}`
+      console.log(data);
+      this.searchParams.trademark=data
+      this.getSearchList()
+
     }
+
   },
   computed: {
     ...mapGetters(["goodsList"])
