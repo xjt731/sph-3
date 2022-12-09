@@ -26,6 +26,7 @@
           </ul>
         </div>
         <!--selector:属于search组件的一个子组件-->
+        <!-- 给子组件绑定以一个名为@getTradeMarkInfo事件，联系'getTradeMarkInfo'方法 -->
         <SearchSelector @getTradeMarkInfo='getTradeMarkInfo'/>
 
         <!--details-->
@@ -174,6 +175,7 @@ export default {
     this.getSearchList();
   },
   methods: {
+    //获取search页展示的商品数据
     getSearchList() {
       //派发action通知服务器发请求
       //目前而言：组件通知服务器发请求，获取数据，携带一个空对象
@@ -210,12 +212,12 @@ export default {
       //
       this.getSearchList();
     },
+    //获取searchSelector组件给search组件传递的品牌数据
     getTradeMarkInfo(trademark){
       let data = `${trademark.tmId}:${trademark.tmName}`
-      console.log(data);
+      //console.log(data);
       this.searchParams.trademark=data
       this.getSearchList()
-
     }
 
   },

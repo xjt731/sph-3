@@ -89,10 +89,15 @@ export default {
     ...mapGetters(["tradeMarkList", "attrsList"])
   },
   methods: {
-    //
+    //点击品牌图片，给search组件传递数据
     checkTradeMark(trademark) {
-      console.log(trademark);
-      
+      //console.log(trademark);
+      //点击品牌按钮，可以获取到用户选择品牌信息
+      //问题1:请求在哪里发?
+      //父组件search发请求展示商品请求，因为需要给服务器携带的参数（10个参数），在父组件发请求
+      //需要将子组件searchSelector的数据给父组件传递过去
+      //问题2：自定义事件的灵活使用
+      //第一个参数：自定义事件名称，第二个参数trademark对象数据
       this.$emit("getTradeMarkInfo", trademark);
     }
   }
