@@ -40,22 +40,11 @@
           <div class="sui-navbar">
             <div class="navbar-inner filter">
               <ul class="sui-nav">
-                <li class="active">
+                <!-- 拥有类名active：会将背景颜色变为红色 -->
+                <li :class="{ active : searchParams.order.indexOf('1')!=-1}">
                   <a href="#">综合</a>
                 </li>
-                <li>
-                  <a href="#">销量</a>
-                </li>
-                <li>
-                  <a href="#">新品</a>
-                </li>
-                <li>
-                  <a href="#">评价</a>
-                </li>
-                <li>
-                  <a href="#">价格⬆</a>
-                </li>
-                <li>
+                <li :class="{ active : searchParams.order.indexOf('2')!=-1}">
                   <a href="#">价格⬇</a>
                 </li>
               </ul>
@@ -240,12 +229,18 @@ export default {
     },
     //删除商品属性面包屑
     clearProps(index) {
-      this.searchParams.props.splice(index,1)
+      this.searchParams.props.splice(index, 1);
       this.getSearchList();
     }
   },
   computed: {
-    ...mapGetters(["goodsList"])
+    ...mapGetters(["goodsList"]),
+    isComprehensive() {
+      return this.searchParams.order.index("1") != -1;
+    },
+    isPrice() {
+      return this.searchParams.order.index("2") != -1;
+    }
   },
   //监听路由的变化
   watch: {
