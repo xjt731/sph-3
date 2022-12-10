@@ -31,6 +31,26 @@ tradeMark---品牌
 2)完成品牌  与  平台属性的业务
 2.1刚刚我们只是把服务器的数据动态展示，但是需要注意，对于品牌|平台属性、用户可以点击的【小米、苹果】|平台属性
 2.2我们还是需要收集用户选择的数据，把用户选择的数据信息，给服务器传递获取，获取相应的数据进行展示
+checkTradeMark(trademark) {
+      //console.log(trademark);
+      //点击品牌按钮，可以获取到用户选择品牌信息
+      //问题1:请求在哪里发?
+      //父组件search发请求展示商品请求，因为需要给服务器携带的参数（10个参数），在父组件发请求
+      //需要将子组件searchSelector的数据给父组件传递过去
+      //问题2：自定义事件的灵活使用
+      //第一个参数：自定义事件名称，第二个参数trademark对象数据
+      this.$emit("getTradeMarkInfo", trademark);
+}
+
+ <SearchSelector @getTradeMarkInfo='getTradeMarkInfo'/>
+
+//获取searchSelector组件给search组件传递的品牌数据
+    getTradeMarkInfo(trademark){
+      let data = `${trademark.tmId}:${trademark.tmName}`
+      this.searchParams.trademark=data
+      this.getSearchList()
+    }
+    
 2.3组件通信-----（工作使用频率非常高、面试的时候经常出现）
 父子:props、插槽、ref
 子父：自定义事件

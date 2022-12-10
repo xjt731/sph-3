@@ -23,11 +23,17 @@
               {{searchParams.keyword}}
               <i @click="clearKeyword">×</i>
             </li>
+            <!-- 展示平台属性的面包屑：平台属性存储于数组里面，可能有多个平台属性，需要遍历 -->
+            <!-- item是存在数组里的字符串props，有split方法，split方法返回值是数组，数组[1]得到第二个元素 -->
+            <li class="with-x" v-for="(item,index) in searchParams.props" :key="index">
+              {{item.split(":")[1]}}
+              <i @click="clearProps(item)">×</i>
+            </li>
           </ul>
         </div>
         <!--selector:属于search组件的一个子组件-->
         <!-- 给子组件绑定以一个名为@getTradeMarkInfo事件，联系'getTradeMarkInfo'方法 -->
-        <SearchSelector @getTradeMarkInfo='getTradeMarkInfo'/>
+        <SearchSelector @getTradeMarkInfo="getTradeMarkInfo" @getAttrInfo="getAttrInfo" />
 
         <!--details-->
         <div class="details clearfix">
@@ -71,7 +77,7 @@
                     </strong>
                   </div>
                   <div class="attr">
-                    <a :title="good.title">{{ good.title }}</a>
+                    <a :title="good.title">{{ good.title}}</a>
                   </div>
                   <div class="commit">
                     <i class="command">
@@ -152,7 +158,7 @@ export default {
         //下面这三个：都有初始值
         order: "1:desc", //排序方式综合|价格 --->升序降序
         pageNo: 1, //获取第几页的数据，默认即为第一个的数据
-        pageSize: 3 //每一页需要展示多少条数据
+        pageSize: 10 //每一页需要展示多少条数据
       }
     };
   },
@@ -213,13 +219,30 @@ export default {
       this.getSearchList();
     },
     //获取searchSelector组件给search组件传递的品牌数据
-    getTradeMarkInfo(trademark){
-      let data = `${trademark.tmId}:${trademark.tmName}`
+    getTradeMarkInfo(trademark) {
+      let data = `${trademark.tmId}:${trademark.tmName}`;
       //console.log(data);
-      this.searchParams.trademark=data
-      this.getSearchList()
+      this.searchParams.trademark = data;
+      this.getSearchList();
+    },
+    //获取searchSelector组件给search组件传递的商品属性数据
+    getAttrInfo(attr, attrValue) {
+      let data = `${attr.attrId}:${attrValue}:${attr.attrName}`;
+      /* this.props = data */
+      /* console.log(typeof this.searchParams.props);
+      this.searchParams.props.push(data)
+      console.log(this.searchParams.props); */
+      if (this.searchParams.props.includes(data) == false) {
+        this.searchParams.props.push(data);
+        console.log(this.searchParams.props);
+      }
+      this.getSearchList();
+    },
+    //删除商品属性面包屑
+    clearProps(index) {
+      this.searchParams.props.splice(index,1)
+      this.getSearchList();
     }
-
   },
   computed: {
     ...mapGetters(["goodsList"])

@@ -22,7 +22,7 @@
       <div class="fl key">{{attr.attrName}}</div>
       <div class="fl value">
         <ul class="type-list">
-          <li v-for="(attrValue,index) in attr.attrValueList" :key="index">
+          <li v-for="(attrValue,index) in attr.attrValueList" :key="index" @click="sendAttr(attr,attrValue)">
             <a>{{attrValue}}</a>
           </li>
         </ul>
@@ -99,6 +99,15 @@ export default {
       //问题2：自定义事件的灵活使用
       //第一个参数：自定义事件名称，第二个参数trademark对象数据
       this.$emit("getTradeMarkInfo", trademark);
+    },
+    //点击品牌属性，给search组件传递数据
+    sendAttr(attr,attrValue){
+      /* console.log(attr); */
+      
+      
+      this.$emit('getAttrInfo',attr,attrValue)
+      
+      
     }
   }
 };
