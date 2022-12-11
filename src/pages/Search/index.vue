@@ -42,13 +42,31 @@
               <ul class="sui-nav">
                 <!-- 拥有类名active：会将背景颜色变为红色 -->
                 <li :class="{ active : isComprehensive}" @click="changeOrder('1')">
-                  <a href="#">综合<span v-show="isComprehensive" class="iconfont" :class="{'icon-long-arrow-down':isDesc,'icon-long-arrow-up':isAsc}"></span></a>
+                  <!-- 对象写法适用于：要绑定多个样式，适用于：要绑定的样式个数确定、名字也确定，但要动态决定用不用。 class和：class最终融为一起-->
+                  <a href="#">
+                    综合
+                    <span
+                      v-show="isComprehensive"
+                      class="iconfont"
+                      :class="{'icon-long-arrow-down':isDesc,'icon-long-arrow-up':isAsc}"
+                    ></span>
+                  </a>
                 </li>
                 <li :class="{ active : isPrice}" @click="changeOrder('2')">
-                  <a href="#">价格<span v-show="isPrice" class="iconfont" :class="{'icon-long-arrow-down':isDesc,'icon-long-arrow-up':isAsc}"></span></a>
+                  <a href="#">
+                    价格
+                    <span
+                      v-show="isPrice"
+                      class="iconfont"
+                      :class="{'icon-long-arrow-down':isDesc,'icon-long-arrow-up':isAsc}"
+                    ></span>
+                  </a>
                 </li>
-                <li :class="{ active : true}" >
-                  <a href="#">销量<span v-show="true" class="iconfont icon-daikuan" ></span></a>
+                <li :class="{ active : true}">
+                  <a href="#">
+                    销量
+                    <span v-show="true" class="iconfont icon-daikuan"></span>
+                  </a>
                 </li>
               </ul>
             </div>
@@ -241,22 +259,20 @@ export default {
  	       //flag形参:接受的是一个字符串【1、2】，取决于用户点击的是综合（1）、价格（2）
  	       //flag这个形参是用户点击的那个标记参数1|2
  	       //1:先获取order初始值：综合、价格 升序、降序
- 	       let originFlag = this.searchParams.order.split(":")[0];
- 	       let originSort = this.searchParams.order.split(":")[1];
+          let originFlag = this.searchParams.order.split(':')[0]
+          let originSort = this.searchParams.order.split(':')[1]
  	       //创建一个新的排序方式
  	       let newOrder = ''
  	       //判断：用户点击的是带背景颜色按钮(谁有背景颜色点击的就是谁)
  	       if(originFlag==flag){
- 	          newOrder = `${originFlag}:${originSort=='desc'?'asc':'desc'}`;
- 	       }else{
- 	         //判断：点击的是不带背景颜色的按钮
- 	         newOrder = `${flag}:desc`;
+            newOrder =`${originFlag}:${originSort=='desc'?'asc':'desc'}`
+         }else{
+ 	       //判断：点击的是不带背景颜色的按钮
+ 	          newOrder = `${flag}:desc`
  	       }
- 	
  	       //重新整理参数
- 	       this.searchParams.order = newOrder;
- 	       this.getSearchList();
- 	  
+ 	       this.searchParams.order=newOrder
+         this.getSearchList();
  	 	    }
   },
   computed: {
@@ -268,13 +284,13 @@ export default {
       return this.searchParams.order.indexOf("2")!= -1;
     }, 
     //是不是降序
- 	    isDesc(){
+ 	  isDesc(){
  	      return this.searchParams.order.indexOf('desc')!=-1;
- 	    },
+ 	  },
  	    //是不是升序
- 	    isAsc(){
+ 	  isAsc(){
  	       return this.searchParams.order.indexOf('asc')!=-1;
- 	 	  }
+ 	 	}
   },
   //监听路由的变化
   watch: {
