@@ -45,7 +45,10 @@
                   <a href="#">综合<span v-show="isComprehensive" class="iconfont" :class="{'icon-long-arrow-down':isDesc,'icon-long-arrow-up':isAsc}"></span></a>
                 </li>
                 <li :class="{ active : isPrice}" @click="changeOrder('2')">
-                  <a href="#">价格⬇<span v-show="isPrice" class="iconfont" :class="{'icon-long-arrow-down':isDesc,'icon-long-arrow-up':isAsc}"></span></a>
+                  <a href="#">价格<span v-show="isPrice" class="iconfont" :class="{'icon-long-arrow-down':isDesc,'icon-long-arrow-up':isAsc}"></span></a>
+                </li>
+                <li :class="{ active : true}" >
+                  <a href="#">销量<span v-show="true" class="iconfont icon-daikuan" ></span></a>
                 </li>
               </ul>
             </div>
