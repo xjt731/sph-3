@@ -74,7 +74,7 @@ num1:在基础课程当中曾经写过排序业务。
 
 num2:综合与价格按钮，点击谁，谁的背景颜色变为红色。（类名：active）
 谁有类这件事情，区分开综合与价格
-
+:class="{ active : isComprehensive}" 
 
 num3：将来点击综合||价格，还是需要给服务器发请求
 【价格升序：把这个信息给服务器传递过去，服务器接收到信息，数据库自动把排序这件事情做了，把排序做好的数据返回给你，你展示即可】
@@ -97,11 +97,29 @@ num4:综合与价格箭头
 4.1箭头用什么去做【可以选用阿里图标库】  https://www.iconfont.cn/ 
 
 4.2对于综合|价格旁边的箭头【动态显示：时而又，时而没有】，带有类名active，拥有箭头
+:class="{'icon-long-arrow-down':isDesc,'icon-long-arrow-up':isAsc}"
+
 
 4.3:根据1、2区分谁有类名（背景）、谁有箭头
     根据asc|desc区分它用哪一个箭头【上、下】
 
+changeOrder(flag){
+  let originFlag = this.searchParams.order.split(':')[0]
+  let originSort = this.searchParams.order.split(':')[1]
+   //创建一个新的排序方式
+   let newOrder = ''
+   //判断：用户点击的是带背景颜色按钮(谁有背景颜色点击的就是谁)
+   if(originFlag==flag){
+    newOrder =`${originFlag}:${originSort=='desc'asc':'desc'}`
+ }else{
+   //判断：点击的是不带背景颜色的按钮
+      newOrder = `${flag}:desc`
+   }
+   //重新整理参数
+   this.searchParams.order=newOrder
+ this.getSearchList();
 
+}
 
 
 

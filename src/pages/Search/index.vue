@@ -107,39 +107,14 @@
               </li>
             </ul>
           </div>
-          <div class="fr page">
-            <div class="sui-pagination clearfix">
-              <ul>
-                <li class="prev disabled">
-                  <a href="#">«上一页</a>
-                </li>
-                <li class="active">
-                  <a href="#">1</a>
-                </li>
-                <li>
-                  <a href="#">2</a>
-                </li>
-                <li>
-                  <a href="#">3</a>
-                </li>
-                <li>
-                  <a href="#">4</a>
-                </li>
-                <li>
-                  <a href="#">5</a>
-                </li>
-                <li class="dotted">
-                  <span>...</span>
-                </li>
-                <li class="next">
-                  <a href="#">下一页»</a>
-                </li>
-              </ul>
-              <div>
-                <span>共10页&nbsp;</span>
-              </div>
-            </div>
-          </div>
+           <!-- 分页器的地方 
+	          total:分页器需要一共展示多少条数据  
+	          pageSize:每一页展示几条数据  
+	          pageNo:当前第几页
+	          continues:连续页码数5 7 9 11
+	          -->
+          <!-- 分页器的地方 -->
+ 	        <Pagination :total="99" :pageSize="3" :pageNo="33" :continues="5"/>
         </div>
       </div>
     </div>

@@ -3,7 +3,9 @@ import App from './App.vue'
 import router from '@/router'
 import store from '@/store'
 Vue.config.productionTip = false
+import Pagination from '@/components/Pagination'
 import TypeNav from '@/components/TypeNav'
+Vue.component(Pagination.name,Pagination);
 Vue.component(TypeNav.name, TypeNav)
 //引入相关的mock数据的文件【需要代码执行一次】
 //获取mock数据
