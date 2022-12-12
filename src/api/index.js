@@ -31,3 +31,7 @@ export const reqSearchList = (data) => {
     //没有返回值，返回的是undefined。有返回值，返回给别的函数调用
     return requests({ url: '/list', method: 'post',data })
 }
+
+//获取产品详情的接口
+///api/item/{skuId}  get
+export const reqDetailList = (skuId)=>requests({url:`/item/${skuId}`,method:'get'});
