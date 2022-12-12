@@ -29,38 +29,16 @@ import Home from '@/pages/Home';
 import Search from '@/pages/Search';
 import Login from '@/pages/Login';
 import Register from '@/pages/Register';
+import routes from './routes'
 //对外默认暴露一个VueRouter的实例
 //在路由配置的时候，对外暴露一个Router类的一个实例
 export default new VueRouter({
      //配置路由
-     routes: [
-          {
-               path: '/home',
-               component: Home,
-               //路由元信息---控制footer显示与隐藏
-               meta:{show:true},
-          },
-          {
-               name: 'search',
-               path: '/search/:keyword?',
-               /* props:(route)=>({keyWord:route.params.keyWord}), */
-               
-               component: Search,
-               meta:{show:true},
-          },
-          {
-               path: '/login',
-               component: Login,
-               meta:{show:false}
-          }, {
-               path: '/register',
-               component: Register,
-               meta:{show:false}
-          },
-          // 重定向
-          {
-             path:'/',
-             redirect:'/home'
-          }
-     ]
+     routes,
+ 	     //滚动行为的设置
+ 	     scrollBehavior(to, from, savedPosition) {
+ 	          //设置Y轴的起点【y属性值没有负数】
+ 	          //当然滚动行为也可以设置x轴的
+                return {y:0}
+     }
 })

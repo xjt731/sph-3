@@ -76,9 +76,9 @@
               <li class="yui3-u-1-5" v-for="(good, index) in goodsList" :key="good.id">
                 <div class="list-wrap">
                   <div class="p-img">
-                    <a>
+                    <router-link :to="`/detail/${good.id}`">
                       <img :src="good.defaultImg" />
-                    </a>
+                    </router-link>
                   </div>
                   <div class="price">
                     <strong>
@@ -107,14 +107,20 @@
               </li>
             </ul>
           </div>
-           <!-- 分页器的地方 
+          <!-- 分页器的地方 
 	          total:分页器需要一共展示多少条数据  
 	          pageSize:每一页展示几条数据  
 	          pageNo:当前第几页
 	          continues:连续页码数5 7 9 11
-	          -->
+          -->
           <!-- 分页器的地方 -->
- 	        <Pagination :total="99" :pageSize="3" :pageNo="33" :continues="5"/>
+          <Pagination
+            :total="total"
+            :pageSize="searchParams.pageSize"
+            :pageNo="searchParams.pageNo"
+            :continues="5"
+            @currentPage="currentPage"
+          />
         </div>
       </div>
     </div>
@@ -124,6 +130,7 @@
 <script>
 import SearchSelector from "./SearchSelector/SearchSelector";
 import { mapGetters } from "vuex";
+import {mapState} from 'vuex';
 export default {
   name: "Search",
   data() {
@@ -228,44 +235,56 @@ export default {
       this.searchParams.props.splice(index, 1);
       this.getSearchList();
     },
+    //分页器的自定义事件，将用户点击的第几页数据传递给父组件
+    currentPage(pageNo) {
+      //修改给服务器携带的参数
+      this.searchParams.pageNo = pageNo;
+      //本次存储持久化
+      //  localStorage.setItem('pageNo',pageNo);
+      //再次发请求
+      this.getSearchList();
+    },
     //排序的回调
- 	    changeOrder(flag){
- 	        // console.log('用户最新点击的按钮的标记',flag);
- 	       //flag形参:接受的是一个字符串【1、2】，取决于用户点击的是综合（1）、价格（2）
- 	       //flag这个形参是用户点击的那个标记参数1|2
- 	       //1:先获取order初始值：综合、价格 升序、降序
-          let originFlag = this.searchParams.order.split(':')[0]
-          let originSort = this.searchParams.order.split(':')[1]
- 	       //创建一个新的排序方式
- 	       let newOrder = ''
- 	       //判断：用户点击的是带背景颜色按钮(谁有背景颜色点击的就是谁)
- 	       if(originFlag==flag){
-            newOrder =`${originFlag}:${originSort=='desc'?'asc':'desc'}`
-         }else{
- 	       //判断：点击的是不带背景颜色的按钮
- 	          newOrder = `${flag}:desc`
- 	       }
- 	       //重新整理参数
- 	       this.searchParams.order=newOrder
-         this.getSearchList();
- 	 	    }
+    changeOrder(flag) {
+      // console.log('用户最新点击的按钮的标记',flag);
+      //flag形参:接受的是一个字符串【1、2】，取决于用户点击的是综合（1）、价格（2）
+      //flag这个形参是用户点击的那个标记参数1|2
+      //1:先获取order初始值：综合、价格 升序、降序
+      let originFlag = this.searchParams.order.split(":")[0];
+      let originSort = this.searchParams.order.split(":")[1];
+      //创建一个新的排序方式
+      let newOrder = "";
+      //判断：用户点击的是带背景颜色按钮(谁有背景颜色点击的就是谁)
+      if (originFlag == flag) {
+        newOrder = `${originFlag}:${originSort == "desc" ? "asc" : "desc"}`;
+      } else {
+        //判断：点击的是不带背景颜色的按钮
+        newOrder = `${flag}:desc`;
+      }
+      //重新整理参数
+      this.searchParams.order = newOrder;
+      this.getSearchList();
+    }
   },
   computed: {
     ...mapGetters(["goodsList"]),
-     isComprehensive() {
-      return this.searchParams.order.indexOf("1")!= -1;
+    isComprehensive() {
+      return this.searchParams.order.indexOf("1") != -1;
     },
     isPrice() {
-      return this.searchParams.order.indexOf("2")!= -1;
-    }, 
+      return this.searchParams.order.indexOf("2") != -1;
+    },
     //是不是降序
- 	  isDesc(){
- 	      return this.searchParams.order.indexOf('desc')!=-1;
- 	  },
- 	    //是不是升序
- 	  isAsc(){
- 	       return this.searchParams.order.indexOf('asc')!=-1;
- 	 	}
+    isDesc() {
+      return this.searchParams.order.indexOf("desc") != -1;
+    },
+    //是不是升序
+    isAsc() {
+      return this.searchParams.order.indexOf("asc") != -1;
+    },
+    ...mapState({
+      total: state => state.search.searchList.total
+    })
   },
   //监听路由的变化
   watch: {
