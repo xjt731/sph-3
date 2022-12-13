@@ -16,9 +16,9 @@
         <!-- 左侧放大镜区域 -->
         <div class="previewWrap">
           <!--放大镜效果-->
-          <Zoom />
+          <Zoom  :imageList="imageList"/>
           <!-- 小图列表 -->
-          <ImageList />
+          <ImageList/>
         </div>
         <!-- 右侧选择区域布局 -->
         <div class="InfoWrap">
@@ -360,7 +360,15 @@
       this.$store.dispatch('getDetailList',this.$route.params.skuId);
     },
      computed:{
-      ...mapGetters(['categoryView'])
+      ...mapGetters(['categoryView','spuSaleAttrList','skuInfo']),
+      imageList() {
+ 	      //imageList:detail父组件给子组件放大镜传递的图片的数据
+ 	      //如果skuInfo是一个空对象，skuInfo.skuImageList等于的是undefined，不能给子组件
+ 	      //至少给子组件一个空的数组
+ 	      return this.skuInfo.skuImageList || [];
+      },
+      
+ 	 	    
     }
   }
 </script>
