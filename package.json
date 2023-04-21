@@ -1,9 +1,12 @@
 {
+  "homepage": "http://xjt731.github.io/sph-3",
   "name": "app",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve --open",
+    "predeploy": "npm run build",
+     "deploy": "gh-pages -d build",
     "build": "vue-cli-service build",
     "lint": "vue-cli-service lint"
   },
