@@ -1,4 +1,7 @@
 const { defineConfig } = require('@vue/cli-service')
+module.exports = {
+  publicPath:'sph-3'
+}
 module.exports = defineConfig({
   lintOnSave: false,
   transpileDependencies: true,
