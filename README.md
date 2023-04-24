@@ -14,40 +14,51 @@ Runs the app and open it to view in the browser.
 
 
 
-Home page
+Home page:
 
 ![](images/Homepage.png)
 ![](images/manage%20different%20right%20permissions.png)
 
-Search page
+Search page:
 
 Understanding and preparation of search query parameters
+
 Dynamically display component data
+
 Search by category and keyword
+
 Search by brand
+
 Search by attribute
+
 Sorting search results
+
 Custom pagination component
+
 ![](images/searchpage.png)
 
-Detail page
+Detail page:
 
 Image zoom effect
+
 Small image carousel
 
 ![](images/porductpage.png)
 
 
 
-AddCartSuccess page
+AddCartSuccess page:
 
 ![](images/addshoppingcart.png)
 
 checkout page:
 
 Handling of temporary user IDs
+
 Management of shopping cart data (complex)
+
 Not using v-model to monitor user input
+
 Use of async/await/Promise.all()
 
 ![](images/checkout1.png)
@@ -57,8 +68,11 @@ Use of async/await/Promise.all()
 Sign-up page:
 
 Handling of component response after registration/login request
+
 Automatic carrying of token data after login
+
 Test account and password:
+
 Account: 13700000000 Password: 111111
 
 ![](images/signup.png)
@@ -73,7 +87,9 @@ Sign-in page:
 Submit order:
 
 Payment QR code
+
 Get order status
+
 Payment component
 
 ![](images/pay1.png)
